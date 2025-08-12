@@ -1,7 +1,9 @@
 package com.example.controller;
 
 import com.example.entity.Account;
+import com.example.entity.Message;
 import com.example.service.AccountService;
+import com.example.service.MessageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,8 @@ public class SocialMediaController {
 
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private MessageService messageService;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody Account account) {
@@ -48,6 +52,16 @@ public class SocialMediaController {
             return ResponseEntity.ok(found);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @PostMapping("/messages")
+    public ResponseEntity<?> createMessage(@RequestBody Message message) {
+        try {
+            Message created = messageService.createMessage(message);
+            return ResponseEntity.ok(created);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
