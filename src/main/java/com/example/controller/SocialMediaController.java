@@ -21,4 +21,23 @@ public class SocialMediaController {
     @Autowired
     private AccountService accountService;
 
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody Account account) {
+        try {
+            // Call your AccountService register method which performs validation and persistence
+            Account created = accountService.register(account);
+            // If successful, return the Account with 200 OK
+            return ResponseEntity.ok(created);
+        } catch (IllegalArgumentException e) {
+            // For validation errors, return 400 Bad Request
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (DuplicateKeyException e) {
+            // For username duplicate, return 409 Conflict
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists.");
+        } catch (Exception e) {
+            // Catch-all for unexpected exceptions
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid registration data.");
+        }
+    }
+
 }
