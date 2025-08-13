@@ -55,4 +55,8 @@ public class MessageService {
         return messageRepository.findAllByOrderByMessageIdAsc(); 
     }
 
+    public Message getMessageById(int messageId) {
+        return messageRepository.findById(messageId).orElse(null);
+    }
+
 }

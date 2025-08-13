@@ -92,4 +92,17 @@ public class SocialMediaController {
         return ResponseEntity.ok(messages);
     }
 
+    @GetMapping("/messages/{messageId}")
+    public ResponseEntity<?> getMessageById(@PathVariable int messageId) {
+        Message message = messageService.getMessageById(messageId);
+
+        if (message != null) {
+            // Return message as JSON
+            return ResponseEntity.ok(message);
+        } else {
+            // Return 200 with empty body
+            return ResponseEntity.ok().body("");
+        }
+    }
+
 }
