@@ -86,5 +86,10 @@ public class SocialMediaController {
         return ResponseEntity.ok(messages); // Always returns a list (empty or not)
     }
 
+    @GetMapping("/messages")
+    public ResponseEntity<List<Message>> getAllMessages() {
+        List<Message> messages = messageService.getAllMessages();
+        return ResponseEntity.ok(messages);
+    }
 
 }

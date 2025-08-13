@@ -16,4 +16,6 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 
     List<Message> findByPostedBy(int postedBy);
 
+    List<Message> findAllByOrderByMessageIdAsc();
+
 }
