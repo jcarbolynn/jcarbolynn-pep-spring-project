@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.List;
 
 @Service
 public class MessageService {
@@ -45,4 +46,9 @@ public class MessageService {
             return 0;
         }
     }
+
+    public List<Message> getMessagesByAccountId(int accountId) {
+        return messageRepository.findByPostedBy(accountId);
+    }
+
 }

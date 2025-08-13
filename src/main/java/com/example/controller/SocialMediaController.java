@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.dao.*;
+
+import java.util.List;
 /**
  * TODO: You will need to write your own endpoints and handlers for your controller using Spring. The endpoints you will need can be
  * found in readme.md as well as the test cases. You be required to use the @GET/POST/PUT/DELETE/etc Mapping annotations
@@ -76,6 +78,12 @@ public class SocialMediaController {
             // Return 200 OK but with an empty body
             return ResponseEntity.ok().build();
         }
+    }
+
+    @GetMapping("/accounts/{accountId}/messages")
+    public ResponseEntity<List<Message>> getAllMessagesFromUser(@PathVariable int accountId) {
+        List<Message> messages = messageService.getMessagesByAccountId(accountId);
+        return ResponseEntity.ok(messages); // Always returns a list (empty or not)
     }
 
 
