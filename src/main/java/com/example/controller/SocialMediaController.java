@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.dao.*;
 
 import java.util.List;
+import java.util.Map;
 /**
  * TODO: You will need to write your own endpoints and handlers for your controller using Spring. The endpoints you will need can be
  * found in readme.md as well as the test cases. You be required to use the @GET/POST/PUT/DELETE/etc Mapping annotations
@@ -104,5 +105,28 @@ public class SocialMediaController {
             return ResponseEntity.ok().body("");
         }
     }
+
+    @PatchMapping("/messages/{messageId}")
+    public ResponseEntity<?> updateMessage(
+            @PathVariable int messageId,
+            @RequestBody Map<String, String> payload) {
+
+        String messageText = payload.get("messageText");
+
+        // Validate text
+        if (messageText == null || messageText.trim().isEmpty() || messageText.length() > 255) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        int rowsUpdated = messageService.updateMessage(messageId, messageText);
+
+        if (rowsUpdated == 0) {
+            // Message not found
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        return ResponseEntity.ok(rowsUpdated); // Should return "1"
+    }
+
 
 }

@@ -59,4 +59,19 @@ public class MessageService {
         return messageRepository.findById(messageId).orElse(null);
     }
 
+    public int updateMessage(int messageId, String newText) {
+        Optional<Message> optionalMessage = messageRepository.findById(messageId);
+
+        if (optionalMessage.isEmpty()) {
+            return 0; // Message not found
+        }
+
+        Message message = optionalMessage.get();
+        message.setMessageText(newText);
+        messageRepository.save(message);
+
+        return 1; // One row updated
+    }
+
+
 }
