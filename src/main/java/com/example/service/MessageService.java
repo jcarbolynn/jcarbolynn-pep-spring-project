@@ -36,4 +36,13 @@ public class MessageService {
         // Save and return
         return messageRepository.save(message);
     }
+
+    public int deleteMessage(int messageId) {
+        if (messageRepository.existsById(messageId)) {
+            messageRepository.deleteById(messageId);
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }

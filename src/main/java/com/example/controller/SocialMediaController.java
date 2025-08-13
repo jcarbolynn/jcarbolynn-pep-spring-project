@@ -65,4 +65,18 @@ public class SocialMediaController {
         }
     }
 
+    @DeleteMapping("/messages/{messageId}")
+    public ResponseEntity<?> deleteMessage(@PathVariable int messageId) {
+        int rowsDeleted = messageService.deleteMessage(messageId);
+
+        if (rowsDeleted == 1) {
+            // Return integer 1 in the body
+            return ResponseEntity.ok(rowsDeleted);
+        } else {
+            // Return 200 OK but with an empty body
+            return ResponseEntity.ok().build();
+        }
+    }
+
+
 }
